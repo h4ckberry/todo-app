@@ -6,22 +6,38 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:reset": "prisma migrate reset --force",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio",
+    "db:postgres": "docker-compose up -d postgres",
+    "db:postgres:stop": "docker-compose stop postgres",
+    "db:switch:postgres": "npm run db:postgres && npm run db:env:postgres && npm run db:schema:postgres && npm run db:generate && npm run db:push",
+    "db:switch:sqlite": "npm run db:env:sqlite && npm run db:schema:sqlite && npm run db:generate && npm run db:push",
+    "db:env:postgres": "echo 'DATABASE_URL=\"postgresql://todo_user:todo_password@localhost:5432/todo_db\"' > .env",
+    "db:env:sqlite": "echo 'DATABASE_URL=\"file:./dev.db\"' > .env",
+    "db:schema:postgres": "cp prisma/schema.postgresql.prisma prisma/schema.prisma",
+    "db:schema:sqlite": "cp prisma/schema.sqlite.prisma prisma/schema.prisma"
   },
   "dependencies": {
+    "@prisma/client": "^6.10.0",
+    "next": "15.3.3",
+    "prisma": "^6.10.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.3.3"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
